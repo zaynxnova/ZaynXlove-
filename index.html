@@ -1,1 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Happy Birthday, Ayesha 🤍</title>
 
+    <!-- ============================================================
+    STYLES
+    ============================================================ -->
+    <style>
+        /* ---------- RESET & BASE ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #c9a84c;
+            --gold-light: #e8d5a3;
+            --gold-glow: rgba(201, 168, 76, 0.25);
+            --rose-gold: #e8b4b8;
+            --silver-glow: rgba(255, 255, 255, 0.05);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            --text-primary: #f5f0eb;
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --text-muted: rgba(255, 255, 255, 0.3);
+            --font-serif: 'Georgia', 'Times New Roman', serif;
+            --font-sans: -apple-system, 'Helvetica Neue', 'Segoe UI', Roboto, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: #0a0808;
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0808;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 20px;
+        }
+
+        /* ---------- LOADING ---------- */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #0a0808;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .loading-text {
+            font-size: 0.95rem;
+            letter-spacing: 4px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-top: 24px;
+            font-weight: 300;
+        }
+        .loading-heart {
+            font-size: 3.6rem;
+            animation: pulse-glow 1.4s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(201, 168, 76, 0.25));
+        }
+        @keyframes pulse-glow {
+            0%,
+            100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.15));
+            }
+            50% {
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 50px rgba(201, 168, 76, 0.4));
+            }
+        }
+
+        /* ---------- PASSWORD ---------- */
+        #password-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            background: rgba(10, 8, 8, 0.94);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+            padding: 20px;
+        }
+        #password-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .password-box {
+            max-width: 400px;
+            width: 100%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 40px 24px 32px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            text-align: center;
+        }
+        .password-box .lock-icon {
+            font-size: 2.6rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .password-box p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
+        .password-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .password-input-group input {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 16px 20px;
+            font-size: 1.1rem;
+            color: #fff;
+            text-align: center;
+            letter-spacing: 6px;
+            font-weight: 300;
+            outline: none;
+            transition: border-color 0.3s;
+            font-family: var(--font-sans);
+        }
+        .password-input-group input:focus {
+            border-color: var(--gold);
+        }
+        .password-input-group input::placeholder {
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .password-input-group button {
+            background: linear-gradient(135deg, var(--gold), #b8942a);
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #0a0808;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+            letter-spacing: 1px;
+            font-family: var(--font-sans);
+        }
+        .password-input-group button:active {
+            transform: scale(0.97);
+        }
+        .password-error {
+            color: #e8b4b8;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            min-height: 22px;
+            transition: opacity 0.3s;
+            opacity: 0;
+        }
+        .password-error.show {
+            opacity: 1;
+        }
+        .shake {
+            animation: shake 0.5s ease;
+        }
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-12px);
+            }
+            40% {
+                transform: translateX(12px);
+            }
+            60% {
+                transform: translateX(-8px);
+            }
+            80% {
+                transform: translateX(8px);
+            }
+        }
+
+        /* ---------- GLASS CARD ---------- */
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            padding: 32px 24px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        /* ---------- SECTIONS ---------- */
+        section {
+            padding: 60px 20px;
+            max-width: 720px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: var(--gold-light);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 300;
+            margin-bottom: 28px;
+            letter-spacing: 0.5px;
+        }
+        .gold-line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 0 auto 24px;
+            border-radius: 4px;
+        }
+        .text-gold {
+            color: var(--gold-light);
+        }
+
+        /* ---------- HERO ---------- */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 24px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.4s ease, transform 1.4s ease;
+            position: relative;
+        }
+        #hero.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #hero .hero-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.6rem, 10vw, 4.8rem);
+            font-weight: 400;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #f5f0eb 40%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        #hero .hero-sub {
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-top: 16px;
+            letter-spacing: 1px;
+            max-width: 540px;
+        }
+        #hero .hero-small {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+        }
+        .hero-scroll-hint {
+            margin-top: 48px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            animation: float-down 2.4s ease-in-out infinite;
+        }
+        @keyframes float-down {
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translateY(10px);
+                opacity: 1;
+            }
+        }
+
+        /* ---------- TIMELINE ---------- */
+        .timeline-item {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 32px;
+            border-left: 2px solid rgba(201, 168, 76, 0.2);
+        }
+        .timeline-item:last-child {
+            border-left-color: transparent;
+        }
+        .timeline-item .date {
+            font-size: 0.75rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+        .timeline-item .tl-title {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin: 4px 0 6px;
+        }
+        .timeline-item .tl-text {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        /* ---------- MEMORY CARDS ---------- */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .memory-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 24px 20px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .memory-card:active {
+            transform: scale(0.98);
+        }
+        .memory-card .mem-title {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            color: var(--gold-light);
+            margin-bottom: 4px;
+        }
+        .memory-card .mem-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* ---------- LOVE LETTER ---------- */
+        .letter-content {
+            font-family: var(--font-serif);
+            font-size: 0.98rem;
+            line-height: 1.9;
+            color: var(--text-secondary);
+            font-weight: 300;
+            white-space: pre-wrap;
+        }
+        .letter-content .sign {
+            margin-top: 16px;
+            color: var(--gold-light);
+            font-style: italic;
+        }
+
+        /* ---------- QURAN ---------- */
+        .quran-box {
+            text-align: center;
+            padding: 32px 20px;
+        }
+        .quran-box .quran-text {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--text-primary);
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+        .quran-box .quran-ref {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* ---------- PROPOSAL ---------- */
+        #proposal .proposal-text {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.9;
+            text-align: center;
+            max-width: 540px;
+            margin: 0 auto 24px;
+        }
+        .proposal-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 16px;
+        }
+        .proposal-buttons button {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 14px 36px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-sans);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            letter-spacing: 0.5px;
+        }
+        .proposal-buttons button:active {
+            transform: scale(0.95);
+        }
+        .proposal-buttons .btn-yes {
+            background: linear-gradient(135deg, var(--gold), #b8942a);
+            color: #0a0808;
+            border-color: transparent;
+            font-weight: 500;
+        }
+        .proposal-buttons .btn-forever {
+            border-color: rgba(201, 168, 76, 0.3);
+            color: var(--gold-light);
+        }
+        .proposal-celebration {
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        .proposal-celebration.show {
+            opacity: 1;
+        }
+        .proposal-celebration .big-text {
+            font-family: var(--font-serif);
+            font-size: 2.4rem;
+            color: var(--gold-light);
+            animation: pulse-glow 1.8s ease-in-out infinite;
+        }
+
+        /* ---------- GIFT BOX ---------- */
+        .gift-box-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        .gift-box {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(145deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.04));
+            border: 2px solid rgba(201, 168, 76, 0.3);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.6rem;
+            transition: all 0.6s ease;
+            position: relative;
+            box-shadow: 0 0 40px rgba(201, 168, 76, 0.08);
+        }
+        .gift-box .ribbon {
+            position: absolute;
+            background: var(--gold);
+            border-radius: 2px;
+        }
+        .gift-box .ribbon-h {
+            width: 70%;
+            height: 4px;
+            top: 50%;
+            left: 15%;
+            transform: translateY(-50%);
+        }
+        .gift-box .ribbon-v {
+            width: 4px;
+            height: 70%;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .gift-box .gift-bow {
+            position: absolute;
+            top: -12px;
+            font-size: 2rem;
+        }
+        .gift-box.opened {
+            transform: scale(1.05) rotateY(10deg);
+            border-color: var(--gold);
+            box-shadow: 0 0 80px rgba(201, 168, 76, 0.2);
+        }
+        .gift-box.opened .gift-emoji {
+            animation: pop-out 0.6s ease;
+        }
+        @keyframes pop-out {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.3);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .gift-reveal {
+            text-align: center;
+            margin-top: 16px;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            max-width: 400px;
+        }
+        .gift-reveal.show {
+            opacity: 1;
+        }
+        .gift-reveal p {
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+        .gift-reveal .gift-highlight {
+            color: var(--gold-light);
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            margin-top: 8px;
+        }
+
+        /* ---------- INSIDE JOKES ---------- */
+        .joke-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        .joke-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px 20px 16px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .joke-card .joke-emoji {
+            font-size: 2.2rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .joke-card .joke-name {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            color: var(--gold-light);
+        }
+        .joke-card .joke-desc {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 300;
+            margin-top: 2px;
+        }
+
+        /* ---------- INTERACTIVE QUIZ ---------- */
+        .quiz-container {
+            max-width: 540px;
+            margin: 0 auto;
+        }
+        .quiz-question {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            text-align: center;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .quiz-options button {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 14px 20px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-sans);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            text-align: left;
+        }
+        .quiz-options button:active {
+            transform: scale(0.97);
+        }
+        .quiz-options button.correct {
+            border-color: var(--gold);
+            color: var(--gold-light);
+            background: rgba(201, 168, 76, 0.08);
+        }
+        .quiz-options button.wrong {
+            border-color: #e8b4b8;
+            color: #e8b4b8;
+            background: rgba(232, 180, 184, 0.06);
+        }
+        .quiz-feedback {
+            text-align: center;
+            margin-top: 14px;
+            min-height: 48px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            font-size: 0.95rem;
+            transition: opacity 0.4s ease;
+        }
+        .quiz-feedback .fb-gold {
+            color: var(--gold-light);
+        }
+
+        /* ---------- ROSE ---------- */
+        .rose-section {
+            text-align: center;
+        }
+        .rose-svg {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 16px;
+            display: block;
+            fill: none;
+            stroke: var(--rose-gold);
+            stroke-width: 1.5;
+            animation: rose-bloom 4s ease-in-out infinite;
+        }
+        @keyframes rose-bloom {
+            0%,
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.06) rotate(4deg);
+                opacity: 1;
+            }
+        }
+        .rose-text {
+            color: var(--text-secondary);
+            font-weight: 300;
+            font-size: 0.95rem;
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ---------- CINEMATIC ENDING ---------- */
+        #ending {
+            text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #ending .ending-line {
+            font-family: var(--font-serif);
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            color: var(--text-secondary);
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            margin: 6px 0;
+        }
+        #ending .ending-line.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #ending .ending-line.gold {
+            color: var(--gold-light);
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+        }
+        #ending .ending-final {
+            margin-top: 32px;
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 6vw, 3.2rem);
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 1.2s ease, transform 1.2s ease;
+        }
+        #ending .ending-final.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+        #ending .ending-heart {
+            font-size: 2.8rem;
+            margin-top: 16px;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        /* ---------- FOOTER ---------- */
+        footer {
+            text-align: center;
+            padding: 40px 20px 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            line-height: 1.8;
+        }
+        footer .footer-heart {
+            color: var(--rose-gold);
+        }
+
+        /* ---------- AUDIO PLAYER ---------- */
+        .audio-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(10, 8, 8, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 40px;
+            padding: 8px 16px 8px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.4s ease;
+        }
+        .audio-player.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .audio-player button {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 4px 6px;
+            transition: color 0.3s;
+            font-family: var(--font-sans);
+        }
+        .audio-player button:active {
+            transform: scale(0.9);
+        }
+        .audio-player input[type="range"] {
+            width: 60px;
+            height: 3px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+            outline: none;
+        }
+        .audio-player input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gold);
+            cursor: pointer;
+        }
+        .audio-player .vol-icon {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (min-width: 600px) {
+            section {
+                padding: 80px 40px;
+                max-width: 800px;
+            }
+            .memory-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .joke-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            .glass-card {
+                padding: 40px 36px;
+            }
+            .gift-box {
+                width: 160px;
+                height: 160px;
+                font-size: 4.8rem;
+            }
+            .audio-player input[type="range"] {
+                width: 80px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            section {
+                padding: 40px 14px;
+            }
+            .glass-card {
+                padding: 24px 16px;
+                border-radius: 20px;
+            }
+            .proposal-buttons button {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+            .audio-player {
+                padding: 6px 12px 6px 16px;
+                bottom: 12px;
+                right: 12px;
+            }
+            .audio-player input[type="range"] {
+                width: 40px;
+            }
+        }
+
+        /* ---------- PERFORMANCE: REDUCE ANIMATIONS ON WEAK DEVICES ---------- */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .loading-heart {
+                animation: none !important;
+            }
+            .gift-box.opened .gift-emoji {
+                animation: none !important;
+            }
+            .rose-svg {
+                animation: none !important;
+            }
+            #ending .ending-heart {
+                animation: none !important;
+            }
+            .hero-scroll-hint {
+                animation: none !important;
+            }
+        }
+
+        /* Low-end device detection via JS will add .low-end class */
+        .low-end * {
+            animation-duration: 0.01ms !important;
+            transition-duration: 0.01ms !important;
+        }
+        .low-end .loading-heart,
+        .low-end .gift-box.opened .gift-emoji,
+        .low-end .rose-svg,
+        .low-end #ending .ending-heart,
+        .low-end .hero-scroll-hint {
+            animation: none !important;
+        }
+        .low-end section {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        .low-end #hero {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        .low-end .glass-card:hover {
+            transform: none !important;
+        }
+        .low-end .memory-card:active {
+            transform: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    LOADING SCREEN
+    ============================================================ -->
+    <div id="loading-screen">
+        <div class="loading-heart">🤍</div>
+        <div class="loading-text">Preparing something special...</div>
+    </div>
+
+    <!-- ============================================================
+    PASSWORD OVERLAY
+    ============================================================ -->
+    <div id="password-overlay">
+        <div class="password-box" id="password-box">
+            <span class="lock-icon">🔒</span>
+            <p>Only one person knows this secret 🤍</p>
+            <div class="password-input-group">
+                <input type="password" id="password-input" placeholder="Enter password" maxlength="20" autocomplete="off" />
+                <button id="password-btn">Unlock</button>
+            </div>
+            <div class="password-error" id="password-error">Incorrect password. Try again.</div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    AUDIO PLAYER
+    ============================================================ -->
+    <div class="audio-player hidden" id="audio-player">
+        <button id="play-btn" aria-label="Play">▶</button>
+        <button id="pause-btn" aria-label="Pause" style="display:none;">⏸</button>
+        <span class="vol-icon">🔊</span>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.6" />
+    </div>
+
+    <!-- ============================================================
+    MAIN CONTENT
+    ============================================================ -->
+    <main id="main-content" style="display:none;">
+
+        <!-- ===== HERO ===== -->
+        <section id="hero">
+            <h1 class="hero-title">Happy Birthday,<br />Ayesha 🤍</h1>
+            <p class="hero-sub">"To the person who slowly became the most beautiful part of my life."</p>
+            <p class="hero-small">Some stories begin with a message… and become a lifetime memory.</p>
+            <div class="hero-scroll-hint">↓ scroll to explore ↓</div>
+        </section>
+
+        <!-- ===== BIRTHDAY MESSAGE ===== -->
+        <section id="birthday-message">
+            <div class="glass-card">
+                <div class="section-title">A Birthday Wish From My Heart</div>
+                <div class="gold-line"></div>
+                <div style="color:var(--text-secondary);font-weight:300;line-height:1.9;font-size:0.95rem;">
+                    <p>Happy 21st Birthday, Ayesha.</p>
+                    <p style="margin-top:12px;">Today is not just another day.<br />It is the day someone special came into this world.</p>
+                    <p style="margin-top:12px;">I pray that Allah fills your life with happiness, peace, success and endless blessings.</p>
+                    <p style="margin-top:12px;">May every dream you carry become a reality, and may your smile always remain the same beautiful reason behind someone's happiness.</p>
+                    <p style="margin-top:12px;">Thank you for being a beautiful part of my life.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== STORY TIMELINE ===== -->
+        <section id="timeline">
+            <div class="section-title">Our Story</div>
+            <div class="gold-line"></div>
+            <div class="timeline-item">
+                <div class="date">13 July 2021</div>
+                <div class="tl-title">The First Message</div>
+                <div class="tl-text">"Sometimes one small message can change everything. I never knew that a simple conversation would become such a beautiful journey."</div>
+            </div>
+            <div class="timeline-item">
+                <div class="date">11 August 2021</div>
+                <div class="tl-title">The Beginning of Something Special</div>
+                <div class="tl-text">"Our conversations started becoming more meaningful. Little moments, small jokes and endless talks slowly created a special connection."</div>
+            </div>
+            <div class="timeline-item">
+                <div class="date">11 November 2021</div>
+                <div class="tl-title">The Day My Heart Spoke</div>
+                <div class="tl-text">"That was the day I finally said those three words… I Love You. And unknowingly, a new chapter of my life began."</div>
+            </div>
+            <div class="timeline-item">
+                <div class="date">29 July</div>
+                <div class="tl-title">Your Special Day</div>
+                <div class="tl-text">"Today I celebrate not only your birthday… but also the person who made my life more beautiful."</div>
+            </div>
+        </section>
+
+        <!-- ===== MEMORY SECTION ===== -->
+        <section id="memories">
+            <div class="section-title">Little Things I Will Always Remember</div>
+            <div class="gold-line"></div>
+            <div class="memory-grid">
+                <div class="memory-card">
+                    <div class="mem-title">That First Call</div>
+                    <div class="mem-text">"The first time I heard your voice, something felt different. That moment stayed with me. Your voice messages still have a way of making ordinary days feel special."</div>
+                </div>
+                <div class="memory-card">
+                    <div class="mem-title">My Favourite Trouble Maker</div>
+                    <div class="mem-text">"Whenever I ask for a picture, a call or a voice message… your legendary reply appears: 'Billi ke khuwab mein chhichre' 😂 And somehow, that makes me smile even more."</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== LOVE LETTER ===== -->
+        <section id="love-letter">
+            <div class="glass-card">
+                <div class="section-title">A Letter From My Heart</div>
+                <div class="gold-line"></div>
+                <div class="letter-content">Dear Ayesha,
+
+                    Happy Birthday.
+
+                    When I look back at our journey, I realize how beautiful it is that a simple message became a connection that means so much to me.
+
+                    You are not just someone I love.
+                    You are someone whose happiness matters to me.
+
+                    Your smile, your voice, your little jokes and even your teasing moments have become some of my favourite memories.
+
+                    I know life is not always perfect, but I want to always be someone who supports you, respects you and stands beside you.
+
+                    I pray that Allah keeps you happy, protects you and blesses your life with everything good.
+
+                    Thank you for becoming such a beautiful chapter of my story.
+
+                    Always remember…
+                    You are special.
+
+                    <div class="sign">With love,<br />Zaheer</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== QURAN VERSE ===== -->
+        <section id="quran">
+            <div class="glass-card quran-box">
+                <div class="quran-text">"And among His signs is that He created for you mates from among yourselves so that you may find tranquillity in them; and He placed between you affection and mercy."</div>
+                <div class="quran-ref">— Qur'an 30:21</div>
+            </div>
+        </section>
+
+        <!-- ===== MARRIAGE PROPOSAL ===== -->
+        <section id="proposal">
+            <div class="glass-card" style="text-align:center;">
+                <div class="section-title">A Question From My Heart 🤍</div>
+                <div class="gold-line"></div>
+                <div class="proposal-text">
+                    Ayesha…<br /><br />
+                    I don't know what the future holds, but I know one thing…<br />
+                    I want to build a future with someone who brings peace, happiness and kindness into my life.<br /><br />
+                    I don't promise a perfect life.<br />
+                    But I promise to always try my best to respect you, support you and stand beside you.<br /><br />
+                    With Allah's blessings, with our families' happiness, and if it is written in our destiny…<br /><br />
+                    I want to spend my life with you.
+                </div>
+                <div style="font-family:var(--font-serif);font-size:1.8rem;color:var(--gold-light);margin:16px 0 8px;">Will You Marry Me?</div>
+                <div class="proposal-buttons">
+                    <button class="btn-yes" data-proposal="yes">YES 🤍</button>
+                    <button class="btn-forever" data-proposal="forever">FOREVER 🤍</button>
+                </div>
+                <div class="proposal-celebration" id="proposal-celebration">
+                    <div class="big-text">Alhamdulillah 🤍</div>
+                    <div style="color:var(--text-secondary);font-weight:300;margin-top:4px;">May Allah bless this journey.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== GIFT BOX ===== -->
+        <section id="gift">
+            <div class="glass-card" style="text-align:center;">
+                <div class="section-title">A Little Surprise For You 🤍</div>
+                <div class="gold-line"></div>
+                <div class="gift-box-wrap" id="gift-box-wrap">
+                    <div class="gift-box" id="gift-box">
+                        <span class="ribbon ribbon-h"></span>
+                        <span class="ribbon ribbon-v"></span>
+                        <span class="gift-bow">🎀</span>
+                        <span class="gift-emoji" style="font-size:2.8rem;position:relative;z-index:2;">🎁</span>
+                    </div>
+                    <div class="gift-reveal" id="gift-reveal">
+                        <p>"People say the best gifts come in boxes…<br />But my biggest gift was meeting you."</p>
+                        <p class="gift-highlight">Thank you for being part of my life, Ayesha.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== INSIDE JOKES ===== -->
+        <section id="jokes">
+            <div class="section-title">The Many Names Of My Favourite Person</div>
+            <div class="gold-line"></div>
+            <div class="joke-grid">
+                <div class="joke-card">
+                    <span class="joke-emoji">🐵</span>
+                    <div class="joke-name">Bandriii</div>
+                    <div class="joke-desc">"The name that somehow became the most special one."</div>
+                </div>
+                <div class="joke-card">
+                    <span class="joke-emoji">🦎</span>
+                    <div class="joke-name">Chhipkali</div>
+                    <div class="joke-desc">"Because sometimes you surprise me with your random moments."</div>
+                </div>
+                <div class="joke-card">
+                    <span class="joke-emoji">🤍</span>
+                    <div class="joke-name">Chimkaari</div>
+                    <div class="joke-desc">"Another cute name reserved only for you."</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== INTERACTIVE QUIZ ===== -->
+        <section id="quiz">
+            <div class="glass-card">
+                <div class="section-title">A Little Game For You</div>
+                <div class="gold-line"></div>
+                <div class="quiz-container" id="quiz-container">
+                    <div id="quiz-question" class="quiz-question"></div>
+                    <div id="quiz-options" class="quiz-options"></div>
+                    <div id="quiz-feedback" class="quiz-feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ROSE MEMORY ===== -->
+        <section id="rose">
+            <div class="glass-card rose-section">
+                <svg class="rose-svg" viewBox="0 0 100 100">
+                    <path d="M50 90 C20 70 10 40 30 25 C45 15 55 25 60 35 C65 25 75 15 90 25 C110 40 100 70 70 90 C60 95 55 95 50 90Z" />
+                    <path d="M50 85 C30 70 20 50 35 38 C45 32 53 38 58 45 C63 38 73 32 83 38 C98 50 88 70 68 85 C60 88 56 88 50 85Z" />
+                    <path d="M50 80 C38 72 32 60 40 52 C46 48 52 52 56 56 C60 52 68 48 74 52 C82 60 76 72 64 80 C58 82 54 82 50 80Z" />
+                    <circle cx="50" cy="50" r="12" fill="rgba(232,180,184,0.15)" stroke="rgba(232,180,184,0.4)" stroke-width="1" />
+                </svg>
+                <div class="rose-text">
+                    "If every rose represented one reason why you are special…<br />this garden would never end."
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CINEMATIC ENDING ===== -->
+        <section id="ending">
+            <div class="ending-line" data-delay="0">Every beautiful story has a beginning…</div>
+            <div class="ending-line" data-delay="400">Ours began with a simple message on 13 July 2021.</div>
+            <div class="ending-line" data-delay="800">It became something special on 11 August 2021.</div>
+            <div class="ending-line" data-delay="1200">My heart spoke on 11 November 2021.</div>
+            <div class="ending-line gold" data-delay="1600">And InshaAllah…<br />the next beautiful chapter will be Nikah.</div>
+            <div class="ending-final" data-delay="2200">Ayesha 🤍 Zaheer<br /><span style="font-size:0.6em;background:linear-gradient(135deg,var(--text-secondary),var(--text-muted));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Forever &amp; Always</span></div>
+            <div class="ending-heart" data-delay="2800">🤍</div>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer>
+            Made with endless love.<br />
+            Especially for my cutest Bandriii ever.<br />
+            Created by your cute Bandar,<br />
+            <span style="color:var(--gold-light);font-family:var(--font-serif);">Zaheer 🤍</span>
+        </footer>
+
+    </main>
+
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ---------- DETECT LOW-END DEVICE ----------
+            var isLowEnd = false;
+            try {
+                if (navigator.deviceMemory && navigator.deviceMemory < 4) isLowEnd = true;
+                if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) isLowEnd = true;
+                if (window.screen.width < 360) isLowEnd = true;
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) isLowEnd = true;
+            } catch (e) { /* ignore */ }
+
+            if (isLowEnd) {
+                document.documentElement.classList.add('low-end');
+            }
+
+            // ---------- LOADING SCREEN ----------
+            var loadingScreen = document.getElementById('loading-screen');
+            var passwordOverlay = document.getElementById('password-overlay');
+            var mainContent = document.getElementById('main-content');
+
+            setTimeout(function() {
+                loadingScreen.classList.add('hidden');
+                passwordOverlay.classList.remove('hidden');
+            }, 1500);
+
+            // ---------- PASSWORD ----------
+            var passwordInput = document.getElementById('password-input');
+            var passwordBtn = document.getElementById('password-btn');
+            var passwordError = document.getElementById('password-error');
+            var passwordBox = document.getElementById('password-box');
+            var correctPassword = '11112021';
+
+            function checkPassword() {
+                var val = passwordInput.value.trim();
+                if (val === correctPassword) {
+                    passwordError.classList.remove('show');
+                    passwordOverlay.classList.add('hidden');
+                    mainContent.style.display = 'block';
+                    setTimeout(function() {
+                        document.getElementById('hero').classList.add('visible');
+                        document.getElementById('audio-player').classList.remove('hidden');
+                        initSections();
+                        initQuiz();
+                        initEnding();
+                    }, 300);
+                } else {
+                    passwordBox.classList.add('shake');
+                    passwordError.classList.add('show');
+                    setTimeout(function() {
+                        passwordBox.classList.remove('shake');
+                    }, 500);
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+            }
+
+            passwordBtn.addEventListener('click', checkPassword);
+            passwordInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') checkPassword();
+            });
+
+            // ---------- SECTIONS OBSERVER ----------
+            var sectionObserver;
+
+            function initSections() {
+                var sections = document.querySelectorAll('section:not(#hero)');
+                var observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, {
+                    threshold: 0.15,
+                    rootMargin: '0px 0px -40px 0px'
+                });
+                sections.forEach(function(s) { observer.observe(s); });
+                sectionObserver = observer;
+            }
+
+            // ---------- PROPOSAL ----------
+            var proposalCelebration = document.getElementById('proposal-celebration');
+            var proposalBtns = document.querySelectorAll('[data-proposal]');
+
+            proposalBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    proposalCelebration.classList.add('show');
+                    setTimeout(function() {
+                        proposalCelebration.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 200);
+                });
+            });
+
+            // ---------- GIFT BOX ----------
+            var giftBox = document.getElementById('gift-box');
+            var giftReveal = document.getElementById('gift-reveal');
+            var giftWrap = document.getElementById('gift-box-wrap');
+            var giftOpened = false;
+
+            giftWrap.addEventListener('click', function() {
+                if (giftOpened) return;
+                giftOpened = true;
+                giftBox.classList.add('opened');
+                var emoji = giftBox.querySelector('.gift-emoji');
+                emoji.textContent = '✨';
+                giftReveal.classList.add('show');
+                setTimeout(function() {
+                    giftReveal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 400);
+            });
+
+            // ---------- QUIZ ----------
+            // Updated quiz data with fixes:
+            // Q2 correct answer now accepts "munh tor doon gi" and common typos.
+            // Q3 correct answer changed to "bandriii".
+            var quizData = [{
+                question: 'Who is my cutest trouble maker?',
+                options: ['Bandriii', 'Chhipkali', 'Chimkaari', 'All of them'],
+                correct: 'all of them',
+                message: 'Hahaha 🤍 Exactly. Different names, same person… the one who is always special to me.'
+            }, {
+                question: 'What sentence scares your Bandar the most? 😂',
+                options: ['"I Love You"', '"Good Morning"', '"Munh Tor Doon Gi"', '"Nothing"'],
+                correct: 'munh tor doon gi',
+                message: '😂 Every time you say this, your Bandar gets scared… but still keeps smiling because it is your favourite dialogue.'
+            }, {
+                question: 'Who is the luckiest Bandar?',
+                options: ['Zaheer', 'Bandriii', 'A Random Person', 'Nobody'],
+                correct: 'bandriii',
+                message: 'Correct 🤍 Because this Bandar got the chance to know the most beautiful person.'
+            }];
+
+            var quizIndex = 0;
+            var quizAnswered = false;
+            var quizContainer = document.getElementById('quiz-container');
+            var quizQuestion = document.getElementById('quiz-question');
+            var quizOptions = document.getElementById('quiz-options');
+            var quizFeedback = document.getElementById('quiz-feedback');
+
+            function initQuiz() {
+                quizIndex = 0;
+                quizAnswered = false;
+                renderQuizQuestion();
+            }
+
+            function renderQuizQuestion() {
+                if (quizIndex >= quizData.length) {
+                    quizQuestion.textContent = '✨ You completed the game! ✨';
+                    quizOptions.innerHTML = '';
+                    quizFeedback.textContent = 'Thank you for playing, my favourite person. 🤍';
+                    return;
+                }
+                var q = quizData[quizIndex];
+                quizQuestion.textContent = q.question;
+                quizOptions.innerHTML = '';
+                quizFeedback.textContent = '';
+                quizAnswered = false;
+                q.options.forEach(function(opt) {
+                    var btn = document.createElement('button');
+                    btn.textContent = opt;
+                    btn.dataset.opt = opt.toLowerCase().trim();
+                    btn.addEventListener('click', function() {
+                        if (quizAnswered) return;
+                        handleQuizAnswer(btn, q);
+                    });
+                    quizOptions.appendChild(btn);
+                });
+            }
+
+            function normalizeAnswer(str) {
+                var s = str.toLowerCase().trim();
+                // Handle "bandriii" variations (any number of i's after "bandr")
+                if (s.match(/^bandr+i+$/)) return 'bandriii';
+                // Handle "munh tor doon gi" variations (allow common typos)
+                if (s.replace(/\s+/g, ' ').match(/munh? tor do?n ?gi?/)) return 'munh tor doon gi';
+                return s;
+            }
+
+            function handleQuizAnswer(selectedBtn, q) {
+                var userAns = normalizeAnswer(selectedBtn.dataset.opt);
+                var correctNorm = normalizeAnswer(q.correct);
+
+                // Special case: "all of them" for first question
+                if (q.correct === 'all of them' && (userAns === 'all of them' || userAns === 'all')) {
+                    selectedBtn.classList.add('correct');
+                    quizAnswered = true;
+                    quizFeedback.innerHTML = '<span class="fb-gold">' + q.message + '</span>';
+                    setTimeout(nextQuiz, 2200);
+                    return;
+                }
+
+                if (userAns === correctNorm) {
+                    selectedBtn.classList.add('correct');
+                    quizAnswered = true;
+                    quizFeedback.innerHTML = '<span class="fb-gold">' + q.message + '</span>';
+                    setTimeout(nextQuiz, 2200);
+                } else {
+                    selectedBtn.classList.add('wrong');
+                    quizFeedback.textContent = '🤔 Not quite. Try again!';
+                    setTimeout(function() {
+                        selectedBtn.classList.remove('wrong');
+                    }, 600);
+                }
+            }
+
+            function nextQuiz() {
+                quizIndex++;
+                renderQuizQuestion();
+                if (quizIndex >= quizData.length) {
+                    setTimeout(function() {
+                        quizContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 200);
+                }
+            }
+
+            // ---------- CINEMATIC ENDING ----------
+            function initEnding() {
+                var lines = document.querySelectorAll('#ending .ending-line, #ending .ending-final, #ending .ending-heart');
+                lines.forEach(function(el) {
+                    var delay = parseInt(el.dataset.delay) || 0;
+                    setTimeout(function() {
+                        el.classList.add('show');
+                    }, delay + 500);
+                });
+            }
+
+            // ---------- AUDIO PLAYER (placeholder) ----------
+            var audioPlayer = document.getElementById('audio-player');
+            var playBtn = document.getElementById('play-btn');
+            var pauseBtn = document.getElementById('pause-btn');
+            var volumeSlider = document.getElementById('volume-slider');
+
+            var audioEl = document.createElement('audio');
+            audioEl.src = 'love.mp3';
+            audioEl.preload = 'none';
+            document.body.appendChild(audioEl);
+
+            var isPlaying = false;
+
+            playBtn.addEventListener('click', function() {
+                isPlaying = true;
+                playBtn.style.display = 'none';
+                pauseBtn.style.display = 'inline';
+                audioEl.play().catch(function() { /* no file */ });
+            });
+
+            pauseBtn.addEventListener('click', function() {
+                isPlaying = false;
+                playBtn.style.display = 'inline';
+                pauseBtn.style.display = 'none';
+                audioEl.pause();
+            });
+
+            volumeSlider.addEventListener('input', function() {
+                audioEl.volume = parseFloat(this.value);
+            });
+
+            // ---------- HANDLE VISIBILITY CHANGE FOR AUDIO ----------
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden && isPlaying) {
+                    audioEl.pause();
+                    isPlaying = false;
+                    playBtn.style.display = 'inline';
+                    pauseBtn.style.display = 'none';
+                }
+            });
+
+            console.log('🤍 Website loaded — made with love for Ayesha.');
+
+        })();
+    </script>
+
+</body>
+</html>
